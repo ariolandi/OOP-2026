@@ -1,6 +1,7 @@
 #ifndef __MY_STRING__
 #define __MY_STRING__
 #include <cstring>
+#include <iostream>
 
 class String {
     char* str;
@@ -11,8 +12,10 @@ class String {
     String();
     String(const char* str);
     String(const String& other);
+    String(String&& other);
     String& operator=(const String& other);
     String& operator=(const char* other);
+    String& operator=(String&& other);
 
     ~String();
 
@@ -27,19 +30,33 @@ class String {
 };
 
 String::String() {
+    std::cout << "Default" << std::endl;
     str = new char[1];
     str[0] = '\0';
 }
 
 String::String(const char* str) {
+    std::cout << "Init" << std::endl;
+
     set(str);
 }
 
 String::String(const String& other) {
+    std::cout << "Copy" << std::endl;
+
     set(other.str);
 }
 
+String::String(String&& other) {
+    std::cout << "Move" << std::endl;
+
+    this->str = other.str;
+    other.str = 0;
+}
+
 String& String::operator=(const String& other) {
+    std::cout << "=" << std::endl;
+
     if (this != &other) {
         delete[] this->str;
         set(other.str);
@@ -48,13 +65,28 @@ String& String::operator=(const String& other) {
 }
 
 String& String::operator=(const char* other) {
+    std::cout << "= char" << std::endl;
+
     delete[] this->str;
     set(other);
     
     return *this;
 }
 
+String& String::operator=(String&& other) {
+    std::cout << "= move" << std::endl;
+
+    if (this != &other) {
+        delete[] this->str;
+        this->str = other.str;
+        other.str = nullptr;
+    }
+    return *this;
+}
+
 String::~String() {
+    std::cout << "Delete" << std::endl;
+
     delete[] str;
 }
 

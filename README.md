@@ -6,7 +6,8 @@
 01. [Запознаване с принципите на ООП. Структури.](https://classroom.github.com/a/tDZKN2ja)
 02. [Класове. Конструктори](https://classroom.github.com/a/E4iTV7v3)
 03. [Канонично представяне на клас](https://classroom.github.com/a/fCdHO2Xh)
-04. [Move семантика]()
+04. [Move семантика](https://classroom.github.com/a/pMEwnTE6)
+05. [Потоци и файлове](https://classroom.github.com/a/pMEwnTE6)
 
 
 
