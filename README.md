@@ -8,7 +8,7 @@
 03. [Канонично представяне на клас](https://classroom.github.com/a/fCdHO2Xh)
 04. [Move семантика](https://classroom.github.com/a/pMEwnTE6)
 05. [Потоци и файлове](https://classroom.github.com/a/pMEwnTE6)
-
+06. [Упражнение]()
 
 
 ### Style Guide 
