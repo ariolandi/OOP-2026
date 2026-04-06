@@ -9,8 +9,8 @@
 ### Задача 2
 
 Да се реализира клас Plant, който представлява растение. Растението има има вид (до 100 символа), цвят (до 30 символа) и уникален референтен номер (положително цяло число). Класът да реализира следните методи:
-- void serialize_binary(std::ostream& os) const - записва растението в двоичен поток;
-- void deserialize_binary(std::istream& is) - чете растението от двоичен поток;
+- void serialize(std::ostream& os) const - записва растението в двоичен поток;
+- void deserialize(std::istream& is) - чете растението от двоичен поток;
 - void serialize_at(std::ostream &os, std::size_t pos) const - записва растение на дадена позиция в двоичен поток;
 - void deserialize_at(std::istream &is, std::size_t pos) - чете растение на дадена позиция в двоичен поток.
 

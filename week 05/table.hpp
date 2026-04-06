@@ -6,7 +6,7 @@
 #include <iostream>
 
 class Table {
-    String name;
+    String title;
     Column** columns;
     size_t columnsCount;
 
@@ -16,7 +16,7 @@ class Table {
 
     size_t findColumn(const String& header) const;
  public:
-	Table(const String& name);
+	Table(const String& title);
     Table(const Table& other);
     Table& operator=(const Table& other);
     Table(Table&& other);
@@ -26,6 +26,7 @@ class Table {
     void addColumn(const String& header);
     void addRow(const size_t& recordsCount, const Record records[]);
     void find(const String& id, std::ostream& os) const;
+    bool hadTitle(const String& title) const;
 
     void deleteColumn(const String& header);
     void deleteRow(const String& id);
@@ -36,7 +37,7 @@ class Table {
 };
 
 void Table::copy(const Table& other) {
-    name = other.name;
+    title = other.title;
     columnsCount = other.columnsCount;
 
     columns = new Column*[columnsCount];
@@ -47,7 +48,7 @@ void Table::copy(const Table& other) {
 }
 
 void Table::move(Table&& other) {
-    name = other.name;
+    title = other.title;
     columnsCount = other.columnsCount;
 
     columns = other.columns;
@@ -72,8 +73,8 @@ size_t Table::findColumn(const String& header) const {
     return columnsCount;
 }
 
-Table::Table(const String& name){
-    this->name = name;
+Table::Table(const String& title){
+    this->title = title;
     columnsCount = 1;
     columns = new Column*[1];
     columns[0] = new Column("id");
@@ -161,6 +162,11 @@ void Table::find(const String& id, std::ostream& os) const {
     }
 }
 
+bool Table::hadTitle(const String& title) const {
+    return this->title == title;
+}
+
+
 void Table::deleteColumn(const String& header) {
     size_t columnIndex = findColumn(header);
 
@@ -204,7 +210,7 @@ void Table::deleteRow(const String& id) {
 }
 
 void Table::print(std::ostream& os) const {
-    name.print(os);
+    title.print(os);
     os << std::endl;
 
     if (columnsCount > 0) {
@@ -222,7 +228,32 @@ void Table::print(std::ostream& os) const {
             os << "]" << std::endl;
         }
     }
-    
+}
+
+
+void Table::serialize(std::ostream& os) const {
+    title.serialize(os);
+
+    os << columnsCount << std::endl;
+    for (size_t i = 0; i < columnsCount; ++i) {
+        columns[i]->serialize(os);
+    } 
+}
+
+void Table::deserialize(std::istream& is) {
+    clear();
+
+    title.deserialize(is);
+
+    is >> columnsCount;
+    is.ignore();
+
+    columns = new Column*[columnsCount];
+    for (size_t i = 0; i < columnsCount; ++i) {
+        Column* newColumn = new Column('');
+        newColumn->deserialize(is);
+        columns[i] = newColumn;
+    }
 }
 
 #endif  // TABLE_HPP

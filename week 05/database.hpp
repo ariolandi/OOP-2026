@@ -13,7 +13,7 @@ class Database {
     void move(Database&& other);
     void clear();
 
-    size_t findTable(const String& header) const;
+    size_t findTable(const String& title) const;
     void serialize() const;
     void deserialize();
  public:
@@ -25,9 +25,9 @@ class Database {
     ~Database();
 
     void addTable(const Table& table);
-    void view(const String& tableName, std::ostream& os) const;
+    void view(const String& title, std::ostream& os) const;
 
-    void deleteTable(const String& header);
+    void deleteTable(const String& title);
 
     void print(std::ostream& os) const;
 };
@@ -66,16 +66,35 @@ void Database::clear() {
     delete[] tables;
 }
 
-size_t Database::findTable(const String& header) const {
-    
+size_t Database::findTable(const String& title) const {
+    for (size_t i = 0; i < tablesCount; ++i) {
+        if (tables[i]->hasTitle(title)) {
+            return i;
+        }
+    } 
+
+    return tablesCount;
 }
 
 void Database::serialize() const {
-    
+    fio << tablesCount << std::endl;
+    for (size_t i = 0; i < tablesCount; ++i) {
+        table[i]->serialize(fio);
+    }
 }
 
 void Database::deserialize() {
+    clear();
     
+    fio >> tablesCount;
+    fio.ignore();
+
+    tables = new Table*[tablesCount]
+    for (size_t i = 0; i < tablesCount; ++i) {
+        Table* newTable = new Table('');
+        newTable->deserialize(fio);
+        tables[i] = newTable;
+    }
 }
 
 Database::Database(const String& name) {
@@ -121,9 +140,11 @@ void Database::addTable(const Table& table) {
     
 }
 
-void Database::view(const String& tableName, std::ostream& os) const;
+void Database::view(const String& title, std::ostream& os) const {
 
-void Database::deleteTable(const String& header);
+}
+
+void Database::deleteTable(const String& title);
 
 void Database::print(std::ostream& os) const;
 
