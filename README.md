@@ -9,6 +9,8 @@
 04. [Move семантика](https://classroom.github.com/a/pMEwnTE6)
 05. [Потоци и файлове](https://classroom.github.com/a/pMEwnTE6)
 06. [Упражнение]()
+07. [Приятелски функции. Оператори]()
+08. [Наследяване]()
 
 
 ### Style Guide 
